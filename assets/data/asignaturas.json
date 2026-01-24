@@ -583,8 +583,8 @@
     },
     "intProgFunc": {
       "id": "intProgFunc",
-      "nombre": "Introducción a la Programación Funcional",
-      "creditos": 7,
+      "nombre": "Programación funcional",
+      "creditos": 10,
       "previas": {
         "curso": [],
         "examen": [
