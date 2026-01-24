@@ -1,9 +1,0 @@
-Inicio: 2026-01-24T04:31:17.791Z
-PASS asignaturas y botones coinciden (1.74 ms)
-INFO input={"htmlButtons":25,"scriptAsignaturas":25} expected={"missingInHtml":[],"missingInScript":[]} actual={"missingInHtml":[],"missingInScript":[]}
-PASS asignaturas key coincide con id (0.47 ms)
-INFO input={"entries":25} expected={"mismatches":[]} actual={"mismatches":[]}
-PASS basicas existen en HTML y scripts (0.74 ms)
-INFO input={"basicas":["gal1","cdiv","p1","matd1"]} expected={"missingInScript":[],"missingInHtml":[]} actual={"missingInScript":[],"missingInHtml":[]}
-Fin: 2026-01-24T04:31:17.795Z
-Resumen: 3/3 OK
