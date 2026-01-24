@@ -5,6 +5,8 @@
 var AppData = null;
 var ESTADOS = null;
 
+console.log('PreviasLogic v2');
+
 function setAppData(data) {
     AppData = data;
     ESTADOS = data.config.ESTADOS;
