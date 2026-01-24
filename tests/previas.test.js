@@ -1,0 +1,86 @@
+const logic = require('../assets/js/scripts.js');
+
+const ESTADOS = logic.ESTADOS;
+
+describe('puedeHabilitar', () => {
+    test('no habilita cdivv si falta aprobar cdiv', () => {
+        const materia = {
+            id: 'cdivv',
+            previas: { curso: ['cdiv'], examen: [] },
+        };
+        const progreso = { aprobadas: [], exoneradas: [] };
+        expect(logic.puedeHabilitar(materia, progreso)).toBe(false);
+    });
+
+    test('habilita cdivv si cdiv esta aprobada', () => {
+        const materia = {
+            id: 'cdivv',
+            previas: { curso: ['cdiv'], examen: [] },
+        };
+        const progreso = { aprobadas: ['cdiv'], exoneradas: [] };
+        expect(logic.puedeHabilitar(materia, progreso)).toBe(true);
+    });
+
+    test('requiere exoneradas y aprobadas a la vez', () => {
+        const materia = {
+            id: 'metNum',
+            previas: { curso: [], examen: ['cdiv', 'gal1'] },
+        };
+        const progreso = { aprobadas: [], exoneradas: ['cdiv'] };
+        expect(logic.puedeHabilitar(materia, progreso)).toBe(false);
+    });
+
+    test('soporta caminos alternativos (OR)', () => {
+        const materia = {
+            id: 'x',
+            habilitacion: {
+                tipo: 'OR',
+                condiciones: [
+                    { tipo: 'AND', aprobadas: ['p1', 'matd1'] },
+                    { tipo: 'AND', exoneradas: ['gal1'] }
+                ]
+            }
+        };
+        const progreso = { aprobadas: ['p1', 'matd1'], exoneradas: [] };
+        expect(logic.puedeHabilitar(materia, progreso)).toBe(true);
+    });
+});
+
+describe('calcularCreditos', () => {
+    test('suma solo creditos de exoneradas', () => {
+        const materias = {
+            cdiv: { creditos: 13 },
+            p1: { creditos: 10 },
+            gal1: { creditos: 9 },
+        };
+        const progreso = { aprobadas: ['cdiv', 'p1'], exoneradas: ['cdiv', 'gal1'] };
+        expect(logic.calcularCreditos(progreso, materias)).toBe(22);
+    });
+});
+
+describe('cambiarEstadoMateria', () => {
+    test('habilitada -> aprobada', () => {
+        const materia = { estado: ESTADOS.HABILITADA };
+        expect(logic.cambiarEstadoMateria(materia)).toBe(ESTADOS.APROBADA);
+    });
+
+    test('aprobada -> exonerada', () => {
+        const materia = { estado: ESTADOS.APROBADA };
+        expect(logic.cambiarEstadoMateria(materia)).toBe(ESTADOS.EXONERADA);
+    });
+
+    test('exonerada -> no-aprobada', () => {
+        const materia = { estado: ESTADOS.EXONERADA };
+        expect(logic.cambiarEstadoMateria(materia)).toBe(ESTADOS.NO_APROBADA);
+    });
+
+    test('no-aprobada -> aprobada', () => {
+        const materia = { estado: ESTADOS.NO_APROBADA };
+        expect(logic.cambiarEstadoMateria(materia)).toBe(ESTADOS.APROBADA);
+    });
+
+    test('no-habilitada no cambia', () => {
+        const materia = { estado: ESTADOS.NO_HABILITADA };
+        expect(logic.cambiarEstadoMateria(materia)).toBe(ESTADOS.NO_HABILITADA);
+    });
+});

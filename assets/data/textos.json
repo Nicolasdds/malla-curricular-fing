@@ -1,0 +1,11 @@
+{
+  "CREDITOS_LABEL": "Créditos: ",
+  "MATERIA_CREDITOS_SUFFIX": " Cr.",
+  "MODAL_MAT_INICIAL": "Debes habilitarla primero.",
+  "MODAL_FALTA_EXONERAR": "Te falta exonerar: ",
+  "MODAL_FALTA_APROBAR": "Te falta aprobar por lo menos:",
+  "GUIA_TITULO": "Guía de Uso",
+  "GUIA_HTML": "<div style=\"text-align: center; margin:auto; width:90%\">\\n  <p>Bienvenido al sistema de previaturas!</p>\\n  <p>Esta aplicación sirve, a modo informativo, para verificar las previas de la carrera y ver los créditos según el avance en la aprobación de unidades curriculares.</p>\\n  <p>Para usarla debes ir haciendo click en cada unidad curricular para alterar su estado entre exonerada, aprobada y no aprobada.</p>\\n  <p>Si quieres saber las previas de una unidad curricular, le puedes hacer click cuando esté deshabilitada y te indicará qué necesitas para cursarla.</p>\\n  <p>Durante el uso puedes ver los créditos acumulándose en la parte superior, y reiniciar todos los valores por defecto en la parte inferior!</p>\\n  <p>Por cualquier consulta, soporte, sugerencias o si quieres realizar algún aporte al proyecto, ya sea un cambio que has notado en la carrera o ser parte del proyecto y figurar en la lista de colaboradores, puedes comunicarte por las redes sociales o acceder al directamente al <a style=\\\"text-decoration:none; font-weight: bolder;\\\" href=\\\"https://forms.gle/TMGnrjNLAfcbaB8b7\\\" target=\\\"_blank\\\">formulario de sugerencias</a>.</p>\\n  <p>Desliza hacia abajo para ver la demostración del uso!</p>\\n</div>\\n<img class=\\\"gif\\\" width=\\\"60%\\\" style=\\\"margin-bottom:5px\\\" src=\\\"img/ayuda.gif\\\" alt=\\\"\\\">\\n<p style=\\\"font-size: 10px; color: red;margin-top: 5px;\\\">*Esta aplicación no es oficial y no tiene relación directa con la facultad de Ingeniería*</p>",
+  "COLAB_TITULO": "Colaboradores",
+  "COLAB_GRACIAS": "Gracias por el apoyo!"
+}

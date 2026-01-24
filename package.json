@@ -1,0 +1,12 @@
+{
+  "name": "malla-curricular-fing",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Malla curricular interactiva para estudiantes de FING.",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
