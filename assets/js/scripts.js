@@ -92,6 +92,10 @@ function cumpleRegla(regla, progresoActual) {
     return faltanAp.length === 0 && faltanEx.length === 0;
 }
 
+function esEdgeRelacionado(edge, materiaId) {
+    return edge.from === materiaId || edge.to === materiaId;
+}
+
 function puedeHabilitar(materia, progresoActual) {
     var regla = materia.habilitacion || construirReglaDesdePrevias(materia);
     return cumpleRegla(regla, progresoActual);
@@ -214,7 +218,8 @@ var PreviasLogic = {
     calcularCreditos: calcularCreditos,
     obtenerMateriasHabilitadas: obtenerMateriasHabilitadas,
     actualizarProgreso: actualizarProgreso,
-    obtenerPendientes: obtenerPendientes
+    obtenerPendientes: obtenerPendientes,
+    esEdgeRelacionado: esEdgeRelacionado
 };
 
 if (typeof window !== 'undefined') {
@@ -233,6 +238,7 @@ function iniciarApp(appData) {
     var asignaturas = (appData.asignaturas && appData.asignaturas.asignaturas) || {};
     var progreso = { aprobadas: [], exoneradas: [] };
     var creditos_actuales = 0;
+    var edgesLayer = null;
 
     var textos = appData.textos;
     var clasesPorEstado = appData.config.CLASES_POR_ESTADO;
@@ -472,24 +478,32 @@ function iniciarApp(appData) {
         });
     }
 
+    function reiniciarProgreso() {
+        progreso.aprobadas = [];
+        progreso.exoneradas = [];
+    }
+
     function verificarMatIncial() {
         if ($('.matInicialControl').is(':checked')) {
             habilitarMateria('matInicial');
             deshabilitarMateria('cdiv');
-            asignaturas.cdiv.previas.curso.push('matInicial');
-            asignaturas.matInicial.previaDe.curso.push('cdiv');
+            addToList(asignaturas.cdiv.previas.curso, 'matInicial');
+            addToList(asignaturas.matInicial.previaDe.curso, 'cdiv');
+            asignaturas.cdiv.habilitacion = construirReglaDesdePrevias(asignaturas.cdiv);
             if ($(window).width() <= 767) {
                 $('.bloque-matInicial').show();
             }
         } else {
             deshabilitarMateria('matInicial');
             habilitarMateria('cdiv');
-            asignaturas.cdiv.previas.curso = [];
-            asignaturas.matInicial.previaDe.curso = [];
+            removeFromList(asignaturas.cdiv.previas.curso, 'matInicial');
+            removeFromList(asignaturas.matInicial.previaDe.curso, 'cdiv');
+            asignaturas.cdiv.habilitacion = construirReglaDesdePrevias(asignaturas.cdiv);
             if ($(window).width() <= 767) {
                 $('.bloque-matInicial').hide();
             }
         }
+        refrescarFlechas();
     }
 
     function controlMenu() {
@@ -508,6 +522,181 @@ function iniciarApp(appData) {
     function actualizarUICompleta() {
         aplicarEstadosTodos();
         actualizarCreditosUI();
+    }
+
+    function refrescarFlechas() {
+        try {
+            var container = document.getElementById('container-fluid');
+            if (edgesLayer && container && container.contains(edgesLayer)) {
+                container.removeChild(edgesLayer);
+            }
+            var edges = construirEdges();
+            edgesLayer = crearCapaFlechas(edges);
+            posicionarFlechas(edgesLayer);
+        } catch (err) {
+            console.warn('No se pudieron refrescar las flechas', err);
+            edgesLayer = null;
+        }
+    }
+
+    function obtenerRequisitosMateria(materia) {
+        var regla = materia.habilitacion || construirReglaDesdePrevias(materia);
+        var requisitos = [];
+
+        function recolectar(reglaActual) {
+            var r = normalizarRegla(reglaActual);
+            if (r.condiciones.length > 0) {
+                r.condiciones.forEach(function(cond) {
+                    recolectar(cond);
+                });
+                return;
+            }
+            r.aprobadas.forEach(function(id) { requisitos.push({ id: id, tipo: 'aprobada' }); });
+            r.exoneradas.forEach(function(id) { requisitos.push({ id: id, tipo: 'exonerada' }); });
+        }
+
+        recolectar(regla);
+        return requisitos;
+    }
+
+    function construirEdges() {
+        var edges = [];
+        for (var key in asignaturas) {
+            if (!asignaturas.hasOwnProperty(key)) {
+                continue;
+            }
+            var materia = asignaturas[key];
+            var requisitos = obtenerRequisitosMateria(materia);
+            requisitos.forEach(function(id) {
+                edges.push({ from: id.id, to: materia.id, tipo: id.tipo });
+            });
+        }
+        var mapa = {};
+        edges.forEach(function(edge) {
+            var key = edge.from + '>' + edge.to;
+            if (!mapa[key] || (mapa[key].tipo !== 'exonerada' && edge.tipo === 'exonerada')) {
+                mapa[key] = edge;
+            }
+        });
+        return Object.keys(mapa).map(function(key) { return mapa[key]; });
+    }
+
+    function crearCapaFlechas(edges) {
+        var container = document.getElementById('container-fluid');
+        if (!container) {
+            return null;
+        }
+
+        var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('class', 'edges-layer');
+        svg.setAttribute('aria-hidden', 'true');
+
+        var defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+        var marker = document.createElementNS('http://www.w3.org/2000/svg', 'marker');
+        marker.setAttribute('id', 'edge-arrow');
+        marker.setAttribute('viewBox', '0 0 10 10');
+        marker.setAttribute('refX', '10');
+        marker.setAttribute('refY', '5');
+        marker.setAttribute('markerWidth', '6');
+        marker.setAttribute('markerHeight', '6');
+        marker.setAttribute('orient', 'auto-start-reverse');
+
+        var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', 'M 0 0 L 10 5 L 0 10 z');
+        path.setAttribute('class', 'edge-arrow');
+        marker.appendChild(path);
+        defs.appendChild(marker);
+        svg.appendChild(defs);
+
+        edges.forEach(function(edge) {
+            var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            line.setAttribute('class', 'edge edge--req-' + edge.tipo);
+            line.setAttribute('data-from', edge.from);
+            line.setAttribute('data-to', edge.to);
+            line.setAttribute('stroke', 'currentColor');
+            line.setAttribute('color', '#333');
+            svg.appendChild(line);
+        });
+
+        container.appendChild(svg);
+        return svg;
+    }
+
+    function posicionarFlechas(svg) {
+        if (!svg) {
+            return;
+        }
+
+        var container = document.getElementById('container-fluid');
+        if (!container) {
+            return;
+        }
+
+        var containerRect = container.getBoundingClientRect();
+        svg.setAttribute('width', containerRect.width);
+        svg.setAttribute('height', containerRect.height);
+        svg.style.width = containerRect.width + 'px';
+        svg.style.height = containerRect.height + 'px';
+
+        var lines = svg.querySelectorAll('.edge');
+        lines.forEach(function(line) {
+            var fromId = line.getAttribute('data-from');
+            var toId = line.getAttribute('data-to');
+            var fromEl = document.getElementById(fromId);
+            var toEl = document.getElementById(toId);
+            if (!fromEl || !toEl) {
+                line.setAttribute('x1', 0);
+                line.setAttribute('y1', 0);
+                line.setAttribute('x2', 0);
+                line.setAttribute('y2', 0);
+                return;
+            }
+
+            var fromRect = fromEl.getBoundingClientRect();
+            var toRect = toEl.getBoundingClientRect();
+            var x1 = fromRect.left + fromRect.width / 2 - containerRect.left;
+            var y1 = fromRect.top + fromRect.height / 2 - containerRect.top;
+            var x2 = toRect.left + toRect.width / 2 - containerRect.left;
+            var y2 = toRect.top + toRect.height / 2 - containerRect.top;
+
+            line.setAttribute('x1', x1);
+            line.setAttribute('y1', y1);
+            line.setAttribute('x2', x2);
+            line.setAttribute('y2', y2);
+        });
+    }
+
+    function aplicarHoverFlechas(svg, materiaId) {
+        if (!svg) {
+            return;
+        }
+        var lines = svg.querySelectorAll('.edge');
+        lines.forEach(function(line) {
+            var edge = { from: line.getAttribute('data-from'), to: line.getAttribute('data-to') };
+            var relacionado = esEdgeRelacionado(edge, materiaId);
+            line.classList.toggle('edge--active', relacionado);
+            line.classList.toggle('edge--dimmed', !relacionado);
+            line.setAttribute('marker-end', relacionado ? 'url(#edge-arrow)' : 'none');
+        });
+    }
+
+    function limpiarHoverFlechas(svg) {
+        if (!svg) {
+            return;
+        }
+        var lines = svg.querySelectorAll('.edge');
+        lines.forEach(function(line) {
+            line.classList.remove('edge--active');
+            line.classList.remove('edge--dimmed');
+            line.setAttribute('marker-end', 'none');
+        });
+    }
+
+    function esDispositivoTouch() {
+        if (typeof window === 'undefined') {
+            return false;
+        }
+        return ('ontouchstart' in window) || (window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
     }
 
     function guardarEstado() {
@@ -587,12 +776,22 @@ function iniciarApp(appData) {
         iniciarEstados();
         $('.matInicialControl').prop('checked', false);
 
+        if (!esDispositivoTouch()) {
+            refrescarFlechas();
+        }
+
         if (!cargarEstado()) {
             verificarMatIncial();
             aplicarPrevias();
         }
 
         actualizarUICompleta();
+
+        $(window).on('resize', function() {
+            if (!esDispositivoTouch()) {
+                posicionarFlechas(edgesLayer);
+            }
+        });
 
         $('.asignatura').bind('click', function() {
             var id = $(this).attr('id');
@@ -617,8 +816,19 @@ function iniciarApp(appData) {
             }
         });
 
+        if (!esDispositivoTouch()) {
+            $('.asignatura').on('mouseenter', function() {
+                aplicarHoverFlechas(edgesLayer, $(this).attr('id'));
+            });
+
+            $('.asignatura').on('mouseleave', function() {
+                limpiarHoverFlechas(edgesLayer);
+            });
+        }
+
         $('#reiniciar').bind('click', function() {
             iniciarEstados();
+            reiniciarProgreso();
             $('.matInicialControl').prop('checked', false);
             verificarMatIncial();
             aplicarPrevias();

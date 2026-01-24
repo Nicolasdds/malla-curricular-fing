@@ -52,4 +52,8 @@ describe('Datos y HTML', () => {
         expect(sinCol).toEqual([]);
         expect(sinOrden).toEqual([]);
     });
+
+    test('MD1 esta en el primer semestre (bloque-2)', () => {
+        expect(data.asignaturas.matd1.bloque).toBe('bloque-2');
+    });
 });

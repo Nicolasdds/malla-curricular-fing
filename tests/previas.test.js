@@ -44,6 +44,30 @@ describe('puedeHabilitar', () => {
         const progreso = { aprobadas: ['p1', 'matd1'], exoneradas: [] };
         expect(logic.puedeHabilitar(materia, progreso)).toBe(true);
     });
+
+    test('tallerProg se habilita con P4 aprobada sin requerir P3', () => {
+        const materia = {
+            id: 'tallerProg',
+            habilitacion: { tipo: 'AND', aprobadas: ['p4'], exoneradas: [] }
+        };
+        const progreso = { aprobadas: ['p4'], exoneradas: [] };
+        expect(logic.puedeHabilitar(materia, progreso)).toBe(true);
+    });
+
+    test('sisop se habilita sin arq si cumple otro camino', () => {
+        const materia = {
+            id: 'sisop',
+            habilitacion: {
+                tipo: 'OR',
+                condiciones: [
+                    { tipo: 'AND', aprobadas: ['arq'], exoneradas: ['cdiv', 'p2', 'matd1', 'gal1'] },
+                    { tipo: 'AND', aprobadas: [], exoneradas: ['cdiv', 'p2', 'matd1', 'gal1'] }
+                ]
+            }
+        };
+        const progreso = { aprobadas: [], exoneradas: ['cdiv', 'p2', 'matd1', 'gal1'] };
+        expect(logic.puedeHabilitar(materia, progreso)).toBe(true);
+    });
 });
 
 describe('calcularCreditos', () => {
@@ -82,5 +106,14 @@ describe('cambiarEstadoMateria', () => {
     test('no-habilitada no cambia', () => {
         const materia = { estado: ESTADOS.NO_HABILITADA };
         expect(logic.cambiarEstadoMateria(materia)).toBe(ESTADOS.NO_HABILITADA);
+    });
+});
+
+describe('edges', () => {
+    test('esEdgeRelacionado detecta relaciones correctas', () => {
+        const edge = { from: 'p1', to: 'p2' };
+        expect(logic.esEdgeRelacionado(edge, 'p1')).toBe(true);
+        expect(logic.esEdgeRelacionado(edge, 'p2')).toBe(true);
+        expect(logic.esEdgeRelacionado(edge, 'gal1')).toBe(false);
     });
 });

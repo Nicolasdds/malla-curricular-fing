@@ -47,7 +47,7 @@
       },
       "activa": true,
       "bloque": "bloque-2",
-      "colClass": "col-md-6 col-6",
+      "colClass": "col-md-4 col-6",
       "orden": 2
     },
     "cdiv": {
@@ -75,7 +75,7 @@
       },
       "activa": true,
       "bloque": "bloque-2",
-      "colClass": "col-md-6 col-6",
+      "colClass": "col-md-4 col-6",
       "orden": 1
     },
     "p1": {
@@ -124,8 +124,8 @@
         ]
       },
       "activa": true,
-      "bloque": "bloque-3",
-      "colClass": "col-md-3 col-6",
+      "bloque": "bloque-2",
+      "colClass": "col-md-4 col-6",
       "orden": 3
     },
     "cdivv": {
@@ -406,7 +406,34 @@
       "activa": true,
       "bloque": "bloque-6",
       "colClass": "col-md-3",
-      "orden": 3
+      "orden": 3,
+      "habilitacion": {
+        "condiciones": [
+          {
+            "aprobadas": [
+              "arq"
+            ],
+            "tipo": "AND",
+            "exoneradas": [
+              "cdiv",
+              "p2",
+              "matd1",
+              "gal1"
+            ]
+          },
+          {
+            "aprobadas": [],
+            "tipo": "AND",
+            "exoneradas": [
+              "cdiv",
+              "p2",
+              "matd1",
+              "gal1"
+            ]
+          }
+        ],
+        "tipo": "OR"
+      }
     },
     "iio": {
       "id": "iio",
@@ -439,9 +466,7 @@
         "curso": [
           "p4"
         ],
-        "examen": [
-          "p3"
-        ]
+        "examen": []
       },
       "previaDe": {
         "curso": [
@@ -452,7 +477,14 @@
       "activa": true,
       "bloque": "bloque-7",
       "colClass": "col-md-4",
-      "orden": 3
+      "orden": 3,
+      "habilitacion": {
+        "aprobadas": [
+          "p4"
+        ],
+        "tipo": "AND",
+        "exoneradas": []
+      }
     },
     "redes": {
       "id": "redes",

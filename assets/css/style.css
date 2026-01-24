@@ -1,6 +1,43 @@
 body {
     font-family: Quattrocento, serif !important;
 }
+.container-fluid {
+    position: relative;
+}
+.edges-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+.edge {
+    stroke: #333;
+    stroke-width: 2;
+    opacity: 0;
+}
+.edge--active {
+    opacity: 0.95;
+    stroke-width: 3;
+}
+.edge--req-aprobada {
+    stroke: #0d6efd;
+    color: #0d6efd;
+}
+.edge--req-exonerada {
+    stroke: #198754;
+    color: #198754;
+}
+.edge--dimmed {
+    opacity: 0;
+}
+.edge-arrow {
+    fill: currentColor;
+}
+.asignatura {
+    position: relative;
+    z-index: 2;
+}
 .modal-body {
     overflow-y: scroll;
     max-height: 70vh;

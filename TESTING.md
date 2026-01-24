@@ -1,32 +1,23 @@
-# Guía de pruebas
+﻿# Guia de pruebas
 
-## Resumen
-Este proyecto incluye una pequeña suite de pruebas unitarias para la lógica central de prerrequisitos usada por el frontend.
-Las pruebas se implementan con Node.js y el módulo `assert` integrado.
-
-## Requisitos
-- Node.js 16+ (sin dependencias externas)
+## Como ejecutar
+1) Abri una terminal en la raiz del repositorio.
+2) Instala dependencias si hace falta:
+   `npm install`
+3) Ejecuta las pruebas:
+   `npm test`
 
 ## Pruebas incluidas
 - `tests/core.test.js`
-  - Comportamiento verificado:
-    - Las materias definidas en `assets/js/scripts.js` existen como botones en `index.html`.
-    - Los botones con clase `asignatura` en `index.html` existen en `assets/js/scripts.js`.
-    - Los IDs declarados en `asignaturasBasicas` existen en HTML y en scripts.
-    - Cada entrada de `asignaturas` mantiene `key` == `id`.
+  - Verifica que los bloques del HTML existan para las materias.
+  - Valida que cada asignatura tenga `bloque`, `colClass` y `orden`.
+  - Confirma que MD1 este en el primer semestre (`bloque-2`).
+- `tests/previas.test.js`
+  - Valida reglas de habilitacion (`puedeHabilitar`) con AND/OR.
+  - Comprueba que Taller de Programacion se habilite con P4 aprobada.
+  - Verifica el helper de relaciones de flechas (`esEdgeRelacionado`).
 
-## Datos de entrada y resultados esperados
-| Caso | Datos de entrada | Resultado esperado | Descripcion |
-| --- | --- | --- | --- |
-| `asignaturas_vs_html` | `index.html` + `assets/js/scripts.js` | sin faltantes | IDs de asignaturas y botones coinciden |
-| `basicas_vs_html` | `asignaturasBasicas` + `index.html` | sin faltantes | basicas existen en HTML |
-| `basicas_vs_scripts` | `asignaturasBasicas` + `scripts.js` | sin faltantes | basicas existen en scripts |
-| `key_vs_id` | `scripts.js` | sin diferencias | key de asignatura igual a id |
-
-## Cómo ejecutar
-1) Abrí una terminal en la raíz del repositorio.
-2) Ejecutá:
-   `node tests/core.test.js`
-
-## Entorno de ejecución
-- Ejecutar desde la raíz del repositorio en un shell estándar (PowerShell, CMD, bash).
+## Comportamiento esperado
+- Si el HTML y los datos no coinciden, `tests/core.test.js` debe fallar.
+- Si las reglas de habilitacion no se cumplen, `tests/previas.test.js` debe fallar.
+- Las pruebas no requieren navegador ni DOM real.
