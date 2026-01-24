@@ -1,0 +1,667 @@
+{
+  "asignaturasBasicas": [
+    "gal1",
+    "cdiv",
+    "p1",
+    "matd1"
+  ],
+  "asignaturas": {
+    "matInicial": {
+      "id": "matInicial",
+      "nombre": "Matemática Inicial",
+      "creditos": 4,
+      "previas": {
+        "curso": [],
+        "examen": []
+      },
+      "previaDe": {
+        "curso": [],
+        "examen": []
+      },
+      "activa": true,
+      "bloque": "bloque-1",
+      "colClass": "",
+      "orden": 1
+    },
+    "gal1": {
+      "id": "gal1",
+      "nombre": "Geometría y Álgebra Lineal 1",
+      "creditos": 9,
+      "previas": {
+        "curso": [],
+        "examen": []
+      },
+      "previaDe": {
+        "curso": [
+          "gal2"
+        ],
+        "examen": [
+          "pye",
+          "metNum",
+          "p4",
+          "matd2",
+          "sisop",
+          "iio",
+          "teoleng"
+        ]
+      },
+      "activa": true,
+      "bloque": "bloque-2",
+      "colClass": "col-md-4 col-6",
+      "orden": 2
+    },
+    "cdiv": {
+      "id": "cdiv",
+      "nombre": "Cálculo D.I.V.",
+      "creditos": 13,
+      "previas": {
+        "curso": [],
+        "examen": []
+      },
+      "previaDe": {
+        "curso": [
+          "cdivv"
+        ],
+        "examen": [
+          "pye",
+          "metNum",
+          "arq",
+          "p4",
+          "sisop",
+          "iio",
+          "redes",
+          "teoleng"
+        ]
+      },
+      "activa": true,
+      "bloque": "bloque-2",
+      "colClass": "col-md-4 col-6",
+      "orden": 1
+    },
+    "p1": {
+      "id": "p1",
+      "nombre": "Programación 1",
+      "creditos": 10,
+      "previas": {
+        "curso": [],
+        "examen": []
+      },
+      "previaDe": {
+        "curso": [
+          "p2"
+        ],
+        "examen": [
+          "metNum",
+          "arq",
+          "p3"
+        ]
+      },
+      "activa": true,
+      "bloque": "bloque-3",
+      "colClass": "col-md-3 col-6",
+      "orden": 4
+    },
+    "matd1": {
+      "id": "matd1",
+      "nombre": "Matemática Discreta 1",
+      "creditos": 9,
+      "previas": {
+        "curso": [],
+        "examen": []
+      },
+      "previaDe": {
+        "curso": [
+          "logica",
+          "arq",
+          "matd2"
+        ],
+        "examen": [
+          "p3",
+          "p4",
+          "sisop",
+          "teoleng",
+          "intProgFunc"
+        ]
+      },
+      "activa": true,
+      "bloque": "bloque-2",
+      "colClass": "col-md-4 col-6",
+      "orden": 3
+    },
+    "cdivv": {
+      "id": "cdivv",
+      "nombre": "Cálculo D.I.V.V.",
+      "creditos": 13,
+      "previas": {
+        "curso": [
+          "cdiv"
+        ],
+        "examen": []
+      },
+      "previaDe": {
+        "curso": [
+          "pye"
+        ],
+        "examen": [
+          "metNum",
+          "iio"
+        ]
+      },
+      "activa": true,
+      "bloque": "bloque-3",
+      "colClass": "col-md-3 col-6",
+      "orden": 1
+    },
+    "gal2": {
+      "id": "gal2",
+      "nombre": "G.A.L. 2",
+      "creditos": 9,
+      "previas": {
+        "curso": [
+          "gal1"
+        ],
+        "examen": []
+      },
+      "previaDe": {
+        "curso": [],
+        "examen": [
+          "metNum",
+          "iio"
+        ]
+      },
+      "activa": true,
+      "bloque": "bloque-3",
+      "colClass": "col-md-3 col-6",
+      "orden": 2
+    },
+    "logica": {
+      "id": "logica",
+      "nombre": "Lógica",
+      "creditos": 12,
+      "previas": {
+        "curso": [
+          "matd1"
+        ],
+        "examen": []
+      },
+      "previaDe": {
+        "curso": [
+          "arq"
+        ],
+        "examen": [
+          "fundb",
+          "teoleng",
+          "progLog",
+          "intProgFunc"
+        ]
+      },
+      "activa": true,
+      "bloque": "bloque-4",
+      "colClass": "col-md-3 col-6",
+      "orden": 2
+    },
+    "pye": {
+      "id": "pye",
+      "nombre": "P. y E.",
+      "creditos": 10,
+      "previas": {
+        "curso": [
+          "cdivv"
+        ],
+        "examen": [
+          "cdiv",
+          "gal1"
+        ]
+      },
+      "previaDe": {
+        "curso": [],
+        "examen": [
+          "iio"
+        ]
+      },
+      "activa": true,
+      "bloque": "bloque-4",
+      "colClass": "col-md-3 col-6",
+      "orden": 1
+    },
+    "metNum": {
+      "id": "metNum",
+      "nombre": "Métodos Numéricos",
+      "creditos": 8,
+      "previas": {
+        "curso": [],
+        "examen": [
+          "cdivv",
+          "gal1",
+          "cdiv",
+          "gal2",
+          "p1"
+        ]
+      },
+      "previaDe": {
+        "curso": [],
+        "examen": []
+      },
+      "activa": true,
+      "bloque": "bloque-5",
+      "colClass": "col-md-4",
+      "orden": 1
+    },
+    "arq": {
+      "id": "arq",
+      "nombre": "Arquitectura de Computadoras",
+      "creditos": 12,
+      "previas": {
+        "curso": [
+          "logica",
+          "matd1",
+          "p2"
+        ],
+        "examen": [
+          "cdiv",
+          "p1"
+        ]
+      },
+      "previaDe": {
+        "curso": [
+          "sisop",
+          "redes"
+        ],
+        "examen": []
+      },
+      "activa": true,
+      "bloque": "bloque-5",
+      "colClass": "col-md-4",
+      "orden": 2
+    },
+    "p2": {
+      "id": "p2",
+      "nombre": "Programación 2",
+      "creditos": 12,
+      "previas": {
+        "curso": [
+          "p1"
+        ],
+        "examen": []
+      },
+      "previaDe": {
+        "curso": [
+          "arq",
+          "p3",
+          "p4"
+        ],
+        "examen": [
+          "intProgFunc",
+          "sisop"
+        ]
+      },
+      "activa": true,
+      "bloque": "bloque-4",
+      "colClass": "col-md-3 col-6",
+      "orden": 4
+    },
+    "p3": {
+      "id": "p3",
+      "nombre": "Programación 3",
+      "creditos": 15,
+      "previas": {
+        "curso": [
+          "p2"
+        ],
+        "examen": [
+          "matd1",
+          "p1"
+        ]
+      },
+      "previaDe": {
+        "curso": [
+          "teoleng"
+        ],
+        "examen": [
+          "tallerProg",
+          "redes",
+          "funbd",
+          "progLog"
+        ]
+      },
+      "activa": true,
+      "bloque": "bloque-5",
+      "colClass": "col-md-4",
+      "orden": 3
+    },
+    "p4": {
+      "id": "p4",
+      "nombre": "Programación 4",
+      "creditos": 15,
+      "previas": {
+        "curso": [],
+        "examen": [
+          "cdiv",
+          "gal1",
+          "matd1",
+          "p2"
+        ]
+      },
+      "previaDe": {
+        "curso": [
+          "tallerProg",
+          "intIngSoft"
+        ],
+        "examen": [
+          "pis"
+        ]
+      },
+      "activa": true,
+      "bloque": "bloque-6",
+      "colClass": "col-md-3",
+      "orden": 4
+    },
+    "matd2": {
+      "id": "matd2",
+      "nombre": "Matemática Discreta 2",
+      "creditos": 9,
+      "previas": {
+        "curso": [
+          "matd1",
+          "gal1"
+        ],
+        "examen": []
+      },
+      "previaDe": {
+        "curso": [],
+        "examen": [
+          "funbd",
+          "progLog"
+        ]
+      },
+      "activa": true,
+      "bloque": "bloque-4",
+      "colClass": "col-md-3 col-6",
+      "orden": 3
+    },
+    "sisop": {
+      "id": "sisop",
+      "nombre": "Sistemas Operativos",
+      "creditos": 12,
+      "previas": {
+        "curso": [
+          "arq"
+        ],
+        "examen": [
+          "cdiv",
+          "p2",
+          "matd1",
+          "gal1"
+        ]
+      },
+      "previaDe": {
+        "curso": [
+          "redes"
+        ],
+        "examen": []
+      },
+      "activa": true,
+      "bloque": "bloque-6",
+      "colClass": "col-md-3",
+      "orden": 3,
+      "habilitacion": {
+        "condiciones": [
+          {
+            "aprobadas": [
+              "arq"
+            ],
+            "tipo": "AND",
+            "exoneradas": [
+              "cdiv",
+              "p2",
+              "matd1",
+              "gal1"
+            ]
+          },
+          {
+            "aprobadas": [],
+            "tipo": "AND",
+            "exoneradas": [
+              "cdiv",
+              "p2",
+              "matd1",
+              "gal1"
+            ]
+          }
+        ],
+        "tipo": "OR"
+      }
+    },
+    "iio": {
+      "id": "iio",
+      "nombre": "I.I.O.",
+      "creditos": 10,
+      "previas": {
+        "curso": [],
+        "examen": [
+          "gal1",
+          "cdiv",
+          "cdivv",
+          "gal2",
+          "pye"
+        ]
+      },
+      "previaDe": {
+        "curso": [],
+        "examen": []
+      },
+      "activa": true,
+      "bloque": "bloque-6",
+      "colClass": "col-md-3",
+      "orden": 1
+    },
+    "tallerProg": {
+      "id": "tallerProg",
+      "nombre": "Taller de Programación",
+      "creditos": 15,
+      "previas": {
+        "curso": [
+          "p4"
+        ],
+        "examen": [
+          "p3"
+        ]
+      },
+      "previaDe": {
+        "curso": [
+          "intIngSoft"
+        ],
+        "examen": []
+      },
+      "activa": true,
+      "bloque": "bloque-7",
+      "colClass": "col-md-4",
+      "orden": 3,
+      "habilitacion": {
+        "condiciones": [
+          {
+            "aprobadas": [
+              "p4"
+            ],
+            "tipo": "AND",
+            "exoneradas": [
+              "p3"
+            ]
+          },
+          {
+            "aprobadas": [],
+            "tipo": "AND",
+            "exoneradas": [
+              "p4"
+            ]
+          }
+        ],
+        "tipo": "OR"
+      }
+    },
+    "redes": {
+      "id": "redes",
+      "nombre": "Redes de computadoras",
+      "creditos": 12,
+      "previas": {
+        "curso": [
+          "arq",
+          "sisop"
+        ],
+        "examen": [
+          "cdiv",
+          "p3"
+        ]
+      },
+      "previaDe": {
+        "curso": [],
+        "examen": []
+      },
+      "activa": true,
+      "bloque": "bloque-7",
+      "colClass": "col-md-4",
+      "orden": 1
+    },
+    "teoleng": {
+      "id": "teoleng",
+      "nombre": "Teoría de Lenguajes",
+      "creditos": 12,
+      "previas": {
+        "curso": [
+          "p3"
+        ],
+        "examen": [
+          "cdiv",
+          "logica",
+          "gal1",
+          "matd1"
+        ]
+      },
+      "previaDe": {
+        "curso": [],
+        "examen": [
+          "progLog",
+          "intProgFunc"
+        ]
+      },
+      "activa": true,
+      "bloque": "bloque-6",
+      "colClass": "col-md-3",
+      "orden": 2
+    },
+    "funbd": {
+      "id": "funbd",
+      "nombre": "Fundamentos de Bases de Datos",
+      "creditos": 15,
+      "previas": {
+        "curso": [],
+        "examen": [
+          "logica",
+          "matd2",
+          "p3"
+        ]
+      },
+      "previaDe": {
+        "curso": [
+          "intIngSoft"
+        ],
+        "examen": []
+      },
+      "activa": true,
+      "bloque": "bloque-7",
+      "colClass": "col-md-4",
+      "orden": 2
+    },
+    "progLog": {
+      "id": "progLog",
+      "nombre": "Programación Lógica",
+      "creditos": 10,
+      "previas": {
+        "curso": [],
+        "examen": [
+          "matd2",
+          "logica",
+          "teoleng",
+          "p3"
+        ]
+      },
+      "previaDe": {
+        "curso": [],
+        "examen": []
+      },
+      "activa": true,
+      "bloque": "bloque-8",
+      "colClass": "col-md-4",
+      "orden": 1
+    },
+    "intProgFunc": {
+      "id": "intProgFunc",
+      "nombre": "Programación funcional",
+      "creditos": 10,
+      "previas": {
+        "curso": [],
+        "examen": [
+          "teoleng",
+          "logica",
+          "matd1",
+          "p2"
+        ]
+      },
+      "previaDe": {
+        "curso": [],
+        "examen": []
+      },
+      "activa": true,
+      "bloque": "bloque-8",
+      "colClass": "col-md-4",
+      "orden": 3
+    },
+    "intIngSoft": {
+      "id": "intIngSoft",
+      "nombre": "Introducción a la Ingeniería de Software",
+      "creditos": 10,
+      "previas": {
+        "curso": [
+          "funbd",
+          "tallerProg",
+          "p4"
+        ],
+        "examen": []
+      },
+      "previaDe": {
+        "curso": [
+          "pis"
+        ],
+        "examen": []
+      },
+      "activa": true,
+      "bloque": "bloque-8",
+      "colClass": "col-md-4",
+      "orden": 2
+    },
+    "pis": {
+      "id": "pis",
+      "nombre": "P.I.S.",
+      "creditos": 15,
+      "previas": {
+        "curso": [
+          "intIngSoft"
+        ],
+        "examen": [
+          "p4"
+        ]
+      },
+      "previaDe": {
+        "curso": [],
+        "examen": []
+      },
+      "activa": true,
+      "bloque": "bloque-9",
+      "colClass": "col-md-2 col-12 offset-md-5",
+      "clasesExtra": [
+        "btn-md"
+      ],
+      "orden": 1
+    }
+  }
+}

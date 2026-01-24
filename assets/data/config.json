@@ -1,0 +1,17 @@
+{
+  "ESTADOS": {
+    "NO_HABILITADA": "no-habilitada",
+    "HABILITADA": "habilitada",
+    "APROBADA": "aprobada",
+    "EXONERADA": "exonerada",
+    "NO_APROBADA": "no-aprobada"
+  },
+  "CLASES_POR_ESTADO": {
+    "no-habilitada": ["btn-secondary", "boton-deshabilitado"],
+    "habilitada": ["btn-danger", "boton-habilitado"],
+    "aprobada": ["btn-primary"],
+    "exonerada": ["btn-success"],
+    "no-aprobada": ["btn-danger", "boton-habilitado"]
+  },
+  "CLASES_BASE_BOTON": ["btn", "asignatura"]
+}
