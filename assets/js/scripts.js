@@ -416,6 +416,20 @@ function iniciarApp(appData) {
         return { titulo: materia.nombre, contenido: content };
     }
 
+    function mostrarModal(titulo, contenido) {
+        $('#ModalTitulo').text(titulo);
+        $('.modal-body').html(contenido);
+        if (typeof $.fn.modal === 'function') {
+            $('#previasModal').modal('show');
+            return;
+        }
+        if (window.bootstrap && window.bootstrap.Modal) {
+            var modalEl = document.getElementById('previasModal');
+            var modal = window.bootstrap.Modal.getOrCreateInstance(modalEl);
+            modal.show();
+        }
+    }
+
     function construirHtmlColaboradores(lista, textoGracias) {
         var html = '<div style="text-align: center; margin:auto; width:90%">';
         html += '<ul class="lista-colaboradores">';
@@ -810,9 +824,7 @@ function iniciarApp(appData) {
                 guardarEstado();
             } else {
                 var modal = construirModalPrevias(id);
-                $('#ModalTitulo').text(modal.titulo);
-                $('.modal-body').html(modal.contenido);
-                $('#previasModal').modal('show');
+                mostrarModal(modal.titulo, modal.contenido);
             }
         });
 
@@ -862,18 +874,14 @@ function iniciarApp(appData) {
         }
 
         $('#ayuda-icon').bind('click', function() {
-            $('#ModalTitulo').text(textos.GUIA_TITULO);
-            $('.modal-body').html(textos.GUIA_HTML);
-            $('#previasModal').modal('show');
+            mostrarModal(textos.GUIA_TITULO, textos.GUIA_HTML);
         });
 
-    $('.colaboradores').bind('click', function() {
-        $('#ModalTitulo').text(textos.COLAB_TITULO);
-        $('.modal-body').html(construirHtmlColaboradores(appData.colaboradores || [], textos.COLAB_GRACIAS));
-        $('#previasModal').modal('show');
-        if ($(window).width() <= 767) {
-            controlMenu();
-        }
+        $('.colaboradores').bind('click', function() {
+            mostrarModal(textos.COLAB_TITULO, construirHtmlColaboradores(appData.colaboradores || [], textos.COLAB_GRACIAS));
+            if ($(window).width() <= 767) {
+                controlMenu();
+            }
         });
 
         if (code_adser) {
