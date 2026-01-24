@@ -101,9 +101,9 @@ function puedeHabilitar(materia, progresoActual) {
     return cumpleRegla(regla, progresoActual);
 }
 
-function obtenerPendientes(materia, progresoActual) {
-    function pendientesBase(regla) {
-        var r = normalizarRegla(regla);
+function evaluarPendientesRegla(regla, progresoActual) {
+    function pendientesBase(reglaBase) {
+        var r = normalizarRegla(reglaBase);
         return {
             faltanAp: r.aprobadas.filter(function(id) {
                 return !progresoActual.aprobadas.includes(id);
@@ -121,8 +121,8 @@ function obtenerPendientes(materia, progresoActual) {
         };
     }
 
-    function pendientesRegla(regla) {
-        var r = normalizarRegla(regla);
+    function pendientesRegla(reglaActual) {
+        var r = normalizarRegla(reglaActual);
         if (r.condiciones.length === 0) {
             return pendientesBase(r);
         }
@@ -144,8 +144,12 @@ function obtenerPendientes(materia, progresoActual) {
         }, { faltanAp: [], faltanEx: [] });
     }
 
-    var regla = materia.habilitacion || construirReglaDesdePrevias(materia);
     return pendientesRegla(regla);
+}
+
+function obtenerPendientes(materia, progresoActual) {
+    var regla = materia.habilitacion || construirReglaDesdePrevias(materia);
+    return evaluarPendientesRegla(regla, progresoActual);
 }
 
 function cambiarEstadoMateria(materia) {
@@ -382,35 +386,50 @@ function iniciarApp(appData) {
             };
         }
 
-        var pendientes = obtenerPendientes(materia, progreso);
+        var regla = materia.habilitacion || construirReglaDesdePrevias(materia);
         var content = '';
 
-        if (pendientes.faltanEx.length !== 0) {
-            content += "<p class='text-center'><strong>" + textos.MODAL_FALTA_EXONERAR + "</strong>";
-            content += "<ul class='list-group text-center'>";
-            pendientes.faltanEx.forEach(function(id) {
-                if (asignaturas[id]) {
-                    content += "<li class='list-group-item'>";
-                    content += asignaturas[id].nombre;
-                    content += "</li>";
-                }
-            });
-            content += "</ul>";
-            content += "</p>";
+        function renderPendientes(pendientes) {
+            var html = '';
+            if (pendientes.faltanEx.length !== 0) {
+                html += "<p class='text-center'><strong>" + textos.MODAL_FALTA_EXONERAR + "</strong>";
+                html += "<ul class='list-group text-center'>";
+                pendientes.faltanEx.forEach(function(id) {
+                    if (asignaturas[id]) {
+                        html += "<li class='list-group-item'>";
+                        html += asignaturas[id].nombre;
+                        html += "</li>";
+                    }
+                });
+                html += "</ul>";
+                html += "</p>";
+            }
+
+            if (pendientes.faltanAp.length !== 0) {
+                html += "<p class='text-center'><strong>" + textos.MODAL_FALTA_APROBAR + "</strong> ";
+                html += "<ul class='list-group text-center'>";
+                pendientes.faltanAp.forEach(function(id) {
+                    if (asignaturas[id]) {
+                        html += "<li class='list-group-item'>";
+                        html += asignaturas[id].nombre;
+                        html += "</li>";
+                    }
+                });
+                html += "</ul>";
+                html += "</p>";
+            }
+
+            return html;
         }
 
-        if (pendientes.faltanAp.length !== 0) {
-            content += "<p class='text-center'><strong>" + textos.MODAL_FALTA_APROBAR + "</strong> ";
-            content += "<ul class='list-group text-center'>";
-            pendientes.faltanAp.forEach(function(id) {
-                if (asignaturas[id]) {
-                    content += "<li class='list-group-item'>";
-                    content += asignaturas[id].nombre;
-                    content += "</li>";
-                }
+        if (regla.tipo === 'OR' && Array.isArray(regla.condiciones) && regla.condiciones.length > 0) {
+            regla.condiciones.forEach(function(cond, idx) {
+                var pendientes = evaluarPendientesRegla(cond, progreso);
+                content += "<p class='text-center'><strong>Opcion " + (idx + 1) + "</strong></p>";
+                content += renderPendientes(pendientes);
             });
-            content += "</ul>";
-            content += "</p>";
+        } else {
+            content = renderPendientes(obtenerPendientes(materia, progreso));
         }
 
         return { titulo: materia.nombre, contenido: content };

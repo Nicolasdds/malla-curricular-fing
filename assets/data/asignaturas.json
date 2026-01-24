@@ -214,9 +214,7 @@
         ]
       },
       "previaDe": {
-        "curso": [
-          "p3"
-        ],
+        "curso": [],
         "examen": [
           "iio"
         ]
@@ -308,7 +306,6 @@
       "creditos": 15,
       "previas": {
         "curso": [
-          "pye",
           "p2"
         ],
         "examen": [
@@ -466,7 +463,9 @@
         "curso": [
           "p4"
         ],
-        "examen": []
+        "examen": [
+          "p3"
+        ]
       },
       "previaDe": {
         "curso": [
@@ -479,11 +478,25 @@
       "colClass": "col-md-4",
       "orden": 3,
       "habilitacion": {
-        "aprobadas": [
-          "p4"
+        "condiciones": [
+          {
+            "aprobadas": [
+              "p4"
+            ],
+            "tipo": "AND",
+            "exoneradas": [
+              "p3"
+            ]
+          },
+          {
+            "aprobadas": [],
+            "tipo": "AND",
+            "exoneradas": [
+              "p4"
+            ]
+          }
         ],
-        "tipo": "AND",
-        "exoneradas": []
+        "tipo": "OR"
       }
     },
     "redes": {
@@ -606,7 +619,7 @@
     "intIngSoft": {
       "id": "intIngSoft",
       "nombre": "Introducción a la Ingeniería de Software",
-      "creditos": 4,
+      "creditos": 10,
       "previas": {
         "curso": [
           "funbd",

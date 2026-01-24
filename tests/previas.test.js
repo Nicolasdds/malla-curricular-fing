@@ -45,12 +45,48 @@ describe('puedeHabilitar', () => {
         expect(logic.puedeHabilitar(materia, progreso)).toBe(true);
     });
 
-    test('tallerProg se habilita con P4 aprobada sin requerir P3', () => {
+    test('tallerProg no se habilita solo con curso de P4', () => {
         const materia = {
             id: 'tallerProg',
-            habilitacion: { tipo: 'AND', aprobadas: ['p4'], exoneradas: [] }
+            habilitacion: {
+                tipo: 'OR',
+                condiciones: [
+                    { tipo: 'AND', aprobadas: ['p4'], exoneradas: ['p3'] },
+                    { tipo: 'AND', aprobadas: [], exoneradas: ['p4'] }
+                ]
+            }
         };
         const progreso = { aprobadas: ['p4'], exoneradas: [] };
+        expect(logic.puedeHabilitar(materia, progreso)).toBe(false);
+    });
+
+    test('tallerProg se habilita con curso P4 y examen P3', () => {
+        const materia = {
+            id: 'tallerProg',
+            habilitacion: {
+                tipo: 'OR',
+                condiciones: [
+                    { tipo: 'AND', aprobadas: ['p4'], exoneradas: ['p3'] },
+                    { tipo: 'AND', aprobadas: [], exoneradas: ['p4'] }
+                ]
+            }
+        };
+        const progreso = { aprobadas: ['p4'], exoneradas: ['p3'] };
+        expect(logic.puedeHabilitar(materia, progreso)).toBe(true);
+    });
+
+    test('tallerProg se habilita con examen de P4', () => {
+        const materia = {
+            id: 'tallerProg',
+            habilitacion: {
+                tipo: 'OR',
+                condiciones: [
+                    { tipo: 'AND', aprobadas: ['p4'], exoneradas: ['p3'] },
+                    { tipo: 'AND', aprobadas: [], exoneradas: ['p4'] }
+                ]
+            }
+        };
+        const progreso = { aprobadas: ['p4'], exoneradas: ['p4'] };
         expect(logic.puedeHabilitar(materia, progreso)).toBe(true);
     });
 
