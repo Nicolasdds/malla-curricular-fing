@@ -7,6 +7,19 @@ Aplicación web para visualizar la malla curricular y simular el avance en previ
 2) Hacé click en las materias para cambiar su estado.
 3) Si una materia está deshabilitada, el modal indica qué falta para cursarla.
 
+## Ramas y despliegues en Render
+- Rama `deploy` (produccion): https://malla-curricular-fing.onrender.com/
+- Rama `dev` (pruebas): https://dev-malla-curricular-fing.onrender.com/
+
+Es sencillo configurar una rama propia en Render para tu fork y hacer pruebas antes de proponer cambios a la rama principal:
+1) En Render crea un "Static Site".
+2) Conecta tu repo de GitHub (tu fork) y elige la rama a desplegar (por ejemplo `mi-rama`).
+3) Build Command: dejalo vacio.
+4) Publish Directory: `.`
+5) Guarda: Render desplega automaticamente en cada push a esa rama.
+   Para que esto funcione, configura la URL en Settings del repo en GitHub (Webhooks/Deploy Hook).
+   El deploy automatico demora unos 3 minutos; no te desesperes si no se ve al instante.
+
 ## Pruebas (Jest)
 1) Instalar dependencias:
    `npm install`
