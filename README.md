@@ -49,23 +49,6 @@ También podés desplegar tu fork en cualquier otra plataforma o simplemente tra
 
 ---
 
-## Pruebas (Jest)
-
-1. Instalar dependencias:
-
-   ```bash
-   npm install
-   ```
-2. Ejecutar pruebas:
-
-   ```bash
-   npm test
-   ```
-
-Se espera que los cambios de lógica incluyan tests básicos cuando sea posible.
-
----
-
 ## Lógica principal del proyecto
 
 * `assets/js/scripts.js` contiene la lógica principal y la UI.
@@ -110,6 +93,10 @@ Ejemplo simple:
 * Configuración de estados y clases → `assets/data/config.json`.
 
 > Evitá mezclar refactors grandes con cambios visuales menores en un mismo PR.
+
+---
+
+> La explicacion completa de los tests y como ejecutarlos esta en `TESTS.md`.
 
 ---
 
