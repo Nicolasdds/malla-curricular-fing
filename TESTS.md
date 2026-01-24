@@ -22,6 +22,9 @@ Este documento describe como ejecutar los tests y que valida cada uno.
 Archivo: `tests/previas.test.js`
 
 - puedeHabilitar: valida reglas de habilitacion (previas, AND/OR) con combinaciones de aprobadas/exoneradas y casos sin previas.
+  - Caso destacado: Taller de Programacion se habilita con P4 aprobada, sin requerir P3.
+  - Caso destacado: Taller de Programacion se habilita con examen de P4.
+  - Caso destacado: Taller de Programacion se habilita con examen de P4 aunque P3 solo este habilitada.
 - calcularCreditos: suma solo creditos exonerados e ignora ids inexistentes.
 - cambiarEstadoMateria: verifica el ciclo de estados y el no cambio para `no-habilitada`.
 - actualizarProgreso: asegura altas/bajas correctas en `aprobadas` y `exoneradas`.
@@ -37,6 +40,8 @@ Archivo: `tests/core.test.js`
   - ids consistentes (`key` == `id`).
   - layout completo (bloque, columna y orden definidos).
   - `matd1` esta en el primer semestre.
+  - `intProgFunc` tiene 10 creditos.
+  - `intIngSoft` tiene 10 creditos.
 - Flechas:
   - todas las flechas apuntan a materias existentes.
   - no hay flechas que apunten a si mismas.

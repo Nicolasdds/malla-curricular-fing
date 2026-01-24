@@ -114,6 +114,14 @@ describe('Datos y HTML', () => {
     test('MD1 esta en el primer semestre (bloque-2)', () => {
         expect(data.asignaturas.matd1.bloque).toBe('bloque-2');
     });
+
+    test('Programacion funcional tiene 10 creditos', () => {
+        expect(data.asignaturas.intProgFunc.creditos).toBe(10);
+    });
+
+    test('Introduccion a la Ingenieria de Software tiene 10 creditos', () => {
+        expect(data.asignaturas.intIngSoft.creditos).toBe(10);
+    });
 });
 
 describe('Flechas', () => {
