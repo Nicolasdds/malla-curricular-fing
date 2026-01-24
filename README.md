@@ -3,9 +3,11 @@
 Aplicación web para visualizar la malla curricular y simular el avance en previas.
 
 ## Uso
-1) Abrí `index.html` en tu navegador.
-2) Hacé click en las materias para cambiar su estado.
-3) Si una materia está deshabilitada, el modal indica qué falta para cursarla.
+La forma recomendada es usar Render con tu propia rama (ver "Ramas y despliegues en Render").
+
+Si queres desarrollo local:
+1) Clona el repo y abri `index.html` en tu navegador (o usa Live Server).
+2) Cuando termines de desarrollar tu modificacion, hace push a tu rama.
 
 ## Ramas y despliegues en Render
 - Rama `deploy` (produccion): https://malla-curricular-fing.onrender.com/
