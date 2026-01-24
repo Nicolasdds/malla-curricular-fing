@@ -16,4 +16,4 @@
 - Sistemas Operativos admite camino sin Arquitectura
 
 ### Notes
-- No se agrego backend ni base de datos
+- No se agrego backend ni base de datos.
