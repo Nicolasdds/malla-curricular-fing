@@ -5,7 +5,7 @@
 var AppData = null;
 var ESTADOS = null;
 
-console.log('PreviasLogic v1.7.3');
+console.log('PreviasLogic v2');
 
 function setAppData(data) {
     AppData = data;
