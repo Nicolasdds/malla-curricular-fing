@@ -905,10 +905,6 @@ function iniciarApp(appData) {
             }
         });
 
-        if (code_adser) {
-            $('#imagen-logo-colaborador')
-            .html('<a href="' + cuenta_instagram + '" target="_blank"><img src="' + url + '" alt="' + alt + '" width="' + ancho_logo + '"></a>');
-        }
     });
 }
 
@@ -928,4 +924,3 @@ if (typeof window !== 'undefined') {
         window.addEventListener('appdata:loaded', iniciarConAppData);
     }
 }
-
