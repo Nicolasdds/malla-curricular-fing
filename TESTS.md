@@ -17,6 +17,46 @@ Este documento describe como ejecutar los tests y que valida cada uno.
    - E2E (Playwright): `npm run test:e2e`
    - Todo: `npm run test:all`
 
+## Analisis estatico de seguridad y pre-push
+
+Requiere una version de Node compatible con ESLint 10 (Node 22.13 o posterior
+en la rama 22, o una rama mas nueva compatible). No requiere Docker ni servidor.
+
+```sh
+npm ci
+npm run hooks:install
+npm run security:static
+```
+
+`hooks:install` activa `.githooks/pre-push` para este clon; hay que ejecutarlo
+una vez en cada clon. Reemplaza la ruta local de hooks, por lo que si ya usas
+otros hooks debes integrarlos antes. El hook bloquea el push si el analisis falla
+o faltan las herramientas. No realiza ningun push por su cuenta.
+
+Se revisan los archivos propios de `assets/js`, `scripts` y los scripts inline
+de `index.html`: ejecucion dinamica (`eval`, `Function`, temporizadores con codigo),
+inserciones peligrosas de HTML y usos de `javascript:`. Las bibliotecas copiadas
+de jQuery y Bootstrap quedan excluidas del lint; sus versiones requieren una
+revision de vulnerabilidades aparte. Las reglas DOM provienen de
+[eslint-plugin-no-unsanitized](https://github.com/mozilla/eslint-plugin-no-unsanitized).
+
+El analisis examina los archivos actuales del directorio de trabajo, no un
+snapshot de los commits salientes. Es un control local que puede omitirse y no
+sustituye controles en CI ni una auditoria completa.
+
+### Alcance del riesgo
+
+- La aplicacion desplegada es estatica: no hay backend ni base de datos propia.
+- Los modales insertan HTML construido con JSON versionados. Ese punto tiene
+  una excepcion de lint documentada: no se demostro una entrada controlable por
+  un visitante, pero si esos datos pasan a venir de usuarios o una API deben
+  escaparse o sanitizarse antes de insertarlos. El lint no prueba su seguridad.
+- Google Analytics y Metricool cargan JavaScript externo. Este analisis no
+  inspecciona el codigo descargado de esos servicios.
+- `npm audit` revisa dependencias de desarrollo/pruebas; no cubre las copias
+  de jQuery y Bootstrap incluidas directamente en `assets`.
+- Gitleaks busca secretos y complementa este analisis; no se instala aqui como hook.
+
 ## Tests unitarios (Jest)
 
 Archivo: `tests/previas.test.js`

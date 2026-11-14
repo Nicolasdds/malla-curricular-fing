@@ -439,6 +439,9 @@ function iniciarApp(appData) {
 
     function mostrarModal(titulo, contenido) {
         $('#ModalTitulo').text(titulo);
+        // Solo marcado de los JSON versionados y de los constructores locales de modales.
+        // Revisar/sanitizar antes de aceptar datos de usuarios, URL o servicios externos.
+        // eslint-disable-next-line no-restricted-syntax -- Punto de HTML revisado; no recibe entradas publicas.
         $('.modal-body').html(contenido);
         if (typeof $.fn.modal === 'function') {
             $('#previasModal').modal('show');
